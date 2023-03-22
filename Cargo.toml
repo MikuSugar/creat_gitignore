@@ -1,0 +1,15 @@
+[package]
+name = "creat_gitignore"
+version = "0.1.0"
+edition = "2021"
+authors = ["syfangjie@live.cn"]
+description = "Help generate.gitignore Command line tools."
+license = "MIT OR Apache-2.0"
+repository = ""
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+path = "src/main.rs"
+name = 'cgi'
+
+[dependencies]
