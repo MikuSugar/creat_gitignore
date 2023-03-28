@@ -1,6 +1,6 @@
 [package]
 name = "creat_gitignore"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["syfangjie@live.cn"]
 description = "Help generate.gitignore Command line tools."

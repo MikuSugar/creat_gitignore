@@ -33,6 +33,12 @@ View the list of templates.
 cgi ls
 ```
 
+### add
+```shell
+cgi add a.gitignore
+```
+Add a.gitignore to the custom template library.
+
 ### help
 
 ```shell
