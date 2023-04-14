@@ -1,21 +1,35 @@
+use clap::{Arg, App};
 use std::fs;
 use std::process::Command;
 use std::collections::HashSet;
 use std::path::Path;
 
 fn main() {
-    let cmd = std::env::args().nth(1).expect("no cmd,pleas execute cgi help");
-    if cmd == "init" {
-        init();
-    } else if cmd == "ls" {
-        ls();
-    } else if cmd == "help" {
-        help();
-    } else if cmd == "add" {
-        let custom_file = std::env::args().nth(2).expect("no custom_file,pleas execute cgi help");
-        add(&custom_file);
-    } else {
-        handle(&cmd);
+    let matches = App::new("cgi")
+        .version("0.1.2")
+        .author("syfangjie@live.cn")
+        .about("A command line tool to generate .gitignore files.")
+        .arg(Arg::with_name("command")
+            .help("The command to execute.")
+            .required(true)
+            .possible_values(&["init", "ls", "add", "help"]))
+        .arg(Arg::with_name("file")
+            .help("The custom .gitignore file to add.")
+            .takes_value(true))
+        .get_matches();
+
+    match matches.value_of("command").unwrap() {
+        "init" => init(),
+        "ls" => ls(),
+        "help" => help(),
+        "add" => {
+            let custom_file = matches.value_of("file").expect("no custom_file,pleas execute cgi help");
+            add(&custom_file.to_string());
+        }
+        _ => {
+            let cmd = matches.value_of("command").unwrap();
+            handle(&cmd.to_string());
+        }
     }
 }
 
@@ -46,7 +60,6 @@ fn handle(s: &String) {
     let cgi_dir = format!("{}/.cgi", home_dir);
     let file_path = format!("{}/gitignore/{}.gitignore", cgi_dir, s);
     let custom_file_path = format!("{}/custom/{}.gitignore", cgi_dir, s);
-
 
     if fs::metadata(&custom_file_path).is_ok() && fs::metadata(&custom_file_path).unwrap().is_file() {
         let dst_path = ".gitignore";
@@ -113,7 +126,6 @@ fn traverse(dir_path: String, ext: &str, set: &mut HashSet<String>) {
         }
     }
 }
-
 
 fn help() {
     println!("cgi init: Initialize and download the template library from GitHub(https://github.com/github/gitignore.git).");
