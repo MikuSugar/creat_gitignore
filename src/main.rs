@@ -6,13 +6,12 @@ use std::path::Path;
 
 fn main() {
     let matches = App::new("cgi")
-        .version("0.1.2")
+        .version("0.1.3")
         .author("syfangjie@live.cn")
         .about("A command line tool to generate .gitignore files.")
         .arg(Arg::with_name("command")
             .help("The command to execute.")
-            .required(true)
-            .possible_values(&["init", "ls", "add", "help"]))
+            .required(true))
         .arg(Arg::with_name("file")
             .help("The custom .gitignore file to add.")
             .takes_value(true))
